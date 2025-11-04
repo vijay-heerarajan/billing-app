@@ -28,6 +28,7 @@ export const registerUser = (userData: RegisterData): { success: boolean; error?
     businessAddress: userData.businessAddress,
     phone: userData.phone,
     gstNo: userData.gstNo || '',
+    logo: userData.logo || '',
     bankDetails: {
       bankName: '',
       accountNo: '',

@@ -89,99 +89,126 @@ const UserProfile: React.FC<UserProfileProps> = ({ onClose }) => {
       <div className="profile-content">
         <div className="profile-section">
           <h3>Personal Information</h3>
-          <div className="form-row">
-            <div className="form-group">
-              <label>Full Name</label>
-              <input
-                type="text"
-                value={profile.name}
-                onChange={handleInputChange('name')}
-                disabled={!isEditing}
-              />
+          {!isEditing ? (
+            <div className="profile-display">
+              <p><strong>Full Name:</strong> {profile.name}</p>
+              <p><strong>Email:</strong> {profile.email}</p>
+              <p><strong>Phone:</strong> {profile.phone}</p>
             </div>
-            <div className="form-group">
-              <label>Email</label>
-              <input
-                type="email"
-                value={profile.email}
-                onChange={handleInputChange('email')}
-                disabled={!isEditing}
-              />
+          ) : (
+            <div className="profile-edit">
+              <div className="edit-field">
+                <span className="field-label">Full Name:</span>
+                <input
+                  type="text"
+                  value={profile.name}
+                  onChange={handleInputChange('name')}
+                />
+              </div>
+              <div className="edit-field">
+                <span className="field-label">Email:</span>
+                <input
+                  type="email"
+                  value={profile.email}
+                  onChange={handleInputChange('email')}
+                />
+              </div>
+              <div className="edit-field">
+                <span className="field-label">Phone:</span>
+                <input
+                  type="tel"
+                  value={profile.phone}
+                  onChange={handleInputChange('phone')}
+                />
+              </div>
             </div>
-          </div>
-          <div className="form-group">
-            <label>Phone</label>
-            <input
-              type="tel"
-              value={profile.phone}
-              onChange={handleInputChange('phone')}
-              disabled={!isEditing}
-            />
-          </div>
+          )}
         </div>
 
         <div className="profile-section">
           <h3>Business Information</h3>
-          <div className="form-group">
-            <label>Business Name</label>
-            <input
-              type="text"
-              value={profile.businessName}
-              onChange={handleInputChange('businessName')}
-              disabled={!isEditing}
-            />
-          </div>
-          <div className="form-group">
-            <label>Business Address</label>
-            <textarea
-              value={profile.businessAddress}
-              onChange={handleInputChange('businessAddress')}
-              disabled={!isEditing}
-              rows={3}
-            />
-          </div>
-          <div className="form-group">
-            <label>GST Number</label>
-            <input
-              type="text"
-              value={profile.gstNo}
-              onChange={handleInputChange('gstNo')}
-              disabled={!isEditing}
-            />
-          </div>
+          {!isEditing ? (
+            <div className="profile-display">
+              <p><strong>Business Name:</strong> {profile.businessName}</p>
+              <p><strong>Business Address:</strong> {profile.businessAddress}</p>
+              <p><strong>GST Number:</strong> {profile.gstNo || 'Not provided'}</p>
+              <p><strong>Logo Path:</strong> {profile.logo || 'Not provided'}</p>
+            </div>
+          ) : (
+            <div className="profile-edit">
+              <div className="edit-field">
+                <span className="field-label">Business Name:</span>
+                <input
+                  type="text"
+                  value={profile.businessName}
+                  onChange={handleInputChange('businessName')}
+                />
+              </div>
+              <div className="edit-field">
+                <span className="field-label">Business Address:</span>
+                <textarea
+                  value={profile.businessAddress}
+                  onChange={handleInputChange('businessAddress')}
+                  rows={3}
+                />
+              </div>
+              <div className="edit-field">
+                <span className="field-label">GST Number:</span>
+                <input
+                  type="text"
+                  value={profile.gstNo}
+                  onChange={handleInputChange('gstNo')}
+                />
+              </div>
+              <div className="edit-field">
+                <span className="field-label">Logo Path:</span>
+                <input
+                  type="text"
+                  value={profile.logo || ''}
+                  onChange={handleInputChange('logo')}
+                  placeholder="e.g., public/logo.jpg"
+                />
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="profile-section">
           <h3>Bank Details</h3>
-          <div className="form-group">
-            <label>Bank Name</label>
-            <input
-              type="text"
-              value={profile.bankDetails.bankName}
-              onChange={handleBankDetailsChange('bankName')}
-              disabled={!isEditing}
-            />
-          </div>
-          <div className="form-row">
-            <div className="form-group">
-              <label>Account Number</label>
-              <input
-                type="text"
-                value={profile.bankDetails.accountNo}
-                onChange={handleBankDetailsChange('accountNo')}
-                disabled={!isEditing}
-              />
+          {!isEditing ? (
+            <div className="profile-display">
+              <p><strong>Bank Name:</strong> {profile.bankDetails.bankName || 'Not provided'}</p>
+              <p><strong>Account Number:</strong> {profile.bankDetails.accountNo || 'Not provided'}</p>
+              <p><strong>IFSC Code:</strong> {profile.bankDetails.ifsc || 'Not provided'}</p>
             </div>
-            <div className="form-group">
-              <label>IFSC Code</label>
-              <input
-                type="text"
-                value={profile.bankDetails.ifsc}
-                onChange={handleBankDetailsChange('ifsc')}
-                disabled={!isEditing}
-              />
+          ) : (
+            <div className="profile-edit">
+              <div className="edit-field">
+                <span className="field-label">Bank Name:</span>
+                <input
+                  type="text"
+                  value={profile.bankDetails.bankName}
+                  onChange={handleBankDetailsChange('bankName')}
+                />
+              </div>
+              <div className="edit-field">
+                <span className="field-label">Account Number:</span>
+                <input
+                  type="text"
+                  value={profile.bankDetails.accountNo}
+                  onChange={handleBankDetailsChange('accountNo')}
+                />
+              </div>
+              <div className="edit-field">
+                <span className="field-label">IFSC Code:</span>
+                <input
+                  type="text"
+                  value={profile.bankDetails.ifsc}
+                  onChange={handleBankDetailsChange('ifsc')}
+                />
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

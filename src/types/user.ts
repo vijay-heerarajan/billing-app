@@ -6,6 +6,7 @@ export interface User {
   businessAddress: string;
   phone: string;
   gstNo: string;
+  logo?: string;
   bankDetails: {
     bankName: string;
     accountNo: string;
@@ -33,4 +34,5 @@ export interface RegisterData {
   businessAddress: string;
   phone: string;
   gstNo?: string;
+  logo?: string;
 }

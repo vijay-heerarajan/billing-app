@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import type { Invoice } from '../types/billing';
+import type { User } from '../types/user';
+import { useUser } from '../contexts/UserContext';
+import { getUserProfile } from '../utils/auth';
 
 interface InvoicePreviewProps {
   invoice: Invoice;
@@ -8,6 +11,20 @@ interface InvoicePreviewProps {
 }
 
 const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, onBack, onPrint }) => {
+  const { user } = useUser();
+  const [userProfile, setUserProfile] = useState<User | null>(null);
+
+  useEffect(() => {
+    if (user) {
+      const profile = getUserProfile(user.id);
+      setUserProfile(profile);
+    }
+  }, [user]);
+
+  if (!userProfile) {
+    return <div className="loading">Loading invoice...</div>;
+  }
+
   return (
     <div className="invoice-preview">
       <div className="invoice-actions">
@@ -17,14 +34,35 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, onBack, onPrin
 
       <div className="invoice-document" id="invoice-document">
         <div className="invoice-header">
-          <div className="business-details">
-            <h1>RAMDHANI TEA SHOP</h1>
-            <p>Pro. Sudarshan Prasad</p>
-            <p>Shop No. 1, I.I.T. (I.S.M.) Dhanbad - 826 004</p>
+          <div className="header-top-row">
+            <div className="gstin-info">
+              {userProfile.gstNo ? `GSTIN No.: ${userProfile.gstNo}` : 'GSTIN No.: Not provided'}
+            </div>
+            <div className="tax-invoice-badge">Tax Invoice</div>
+            <div className="mobile-info">
+              {userProfile.phone ? `Mob.: ${userProfile.phone}` : 'Mob.: Not provided'}
+            </div>
           </div>
-          <div className="invoice-info">
-            <p><strong>Invoice No:</strong> {invoice.invoiceNo}</p>
-            <p><strong>Date:</strong> {new Date(invoice.date).toLocaleDateString('en-IN')}</p>
+          
+          <div className="header-main-row">
+            <div className="header-left">
+              {userProfile.logo && (
+                <div className="business-logo">
+                  <img src={userProfile.logo} alt="Business Logo" className="logo-img" />
+                </div>
+              )}
+              
+              <div className="business-details">
+                <h1>{userProfile.businessName}</h1>
+                {/* <p className="proprietor">Pro. {userProfile.name}</p> */}
+                <p>{userProfile.businessAddress}</p>
+              </div>
+            </div>
+            
+            <div className="invoice-info">
+              <p><strong>Invoice No.</strong> {invoice.invoiceNo}</p>
+              <p><strong>Date:</strong> {new Date(invoice.date).toLocaleDateString('en-IN')}</p>
+            </div>
           </div>
         </div>
 
@@ -33,7 +71,8 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, onBack, onPrin
           <p><strong>Address:</strong> {invoice.customerAddress}</p>
         </div>
 
-        <table className="invoice-table">
+        <div className="invoice-content">
+          <table className="invoice-table">
           <thead>
             <tr>
               <th>Sr. No.</th>
@@ -73,14 +112,18 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, onBack, onPrin
               <td><strong>₹{invoice.totalAmount.toFixed(2)}</strong></td>
             </tr>
           </tbody>
-        </table>
+          </table>
 
-        <div className="invoice-footer">
+          <div className="invoice-footer">
           <div className="bank-details">
             <p><strong>Bank Details:</strong></p>
-            <p>Bank Name: HDFC, Police Line, Hirapur, Dhanbad</p>
-            <p>A/c No: 50200101861624, IFS Code: HDFC0004721</p>
-            <p>Name: RAMDHANI TEA SHOP</p>
+            {userProfile.bankDetails.bankName && (
+              <p>Bank Name: {userProfile.bankDetails.bankName}</p>
+            )}
+            {userProfile.bankDetails.accountNo && userProfile.bankDetails.ifsc && (
+              <p>A/c No: {userProfile.bankDetails.accountNo}, IFS Code: {userProfile.bankDetails.ifsc}</p>
+            )}
+            <p>Name: {userProfile.businessName.toUpperCase()}</p>
           </div>
           
           <div className="amount-words">
@@ -88,9 +131,10 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, onBack, onPrin
           </div>
           
           <div className="signature">
-            <p>For <strong>RAMDHANI TEA SHOP</strong></p>
+            <p>For <strong>{userProfile.businessName.toUpperCase()}</strong></p>
             <br/>
             <p>Prop./Auth. Signatory</p>
+          </div>
           </div>
         </div>
       </div>
