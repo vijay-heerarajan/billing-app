@@ -21,6 +21,22 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, onBack, onPrin
     }
   }, [user]);
 
+  const getLogoPath = (logoPath: string | undefined) => {
+    if (!logoPath) return '';
+    
+    // If path starts with 'public/', remove it and add leading slash
+    if (logoPath.startsWith('public/')) {
+      return '/' + logoPath.substring(7); // Remove 'public/' and add '/'
+    }
+    
+    // If path doesn't start with '/', add it
+    if (!logoPath.startsWith('/')) {
+      return '/' + logoPath;
+    }
+    
+    return logoPath;
+  };
+
   if (!userProfile) {
     return <div className="loading">Loading invoice...</div>;
   }
@@ -48,7 +64,7 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, onBack, onPrin
             <div className="header-left">
               {userProfile.logo && (
                 <div className="business-logo">
-                  <img src={userProfile.logo} alt="Business Logo" className="logo-img" />
+                  <img src={getLogoPath(userProfile.logo)} alt="Business Logo" className="logo-img" />
                 </div>
               )}
               
