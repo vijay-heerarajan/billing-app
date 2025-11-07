@@ -401,6 +401,24 @@ textarea {
   margin: 3px 0;
 }
 
+.delivery-date {
+  font-size: 12px;
+  margin: 10px 0;
+}
+
+.delivery-date p {
+  margin: 3px 0;
+}
+
+.form-help {
+  margin-top: 5px;
+}
+
+.form-help small {
+  color: #666;
+  font-style: italic;
+}
+
 .signature {
   grid-column: span 2;
   text-align: right;

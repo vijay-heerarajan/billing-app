@@ -12,7 +12,8 @@ interface InvoiceFormProps {
 const InvoiceForm: React.FC<InvoiceFormProps> = ({ onInvoiceCreate }) => {
   const [invoice, setInvoice] = useState<Partial<Invoice>>({
     invoiceNo: '',
-    date: new Date().toISOString().split('T')[0],
+    date: new Date().toLocaleDateString('en-IN'),
+    deliveryDate: '',
     customerName: '',
     customerAddress: '',
     items: [],
@@ -92,6 +93,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onInvoiceCreate }) => {
       id: Date.now().toString(),
       invoiceNo: invoice.invoiceNo,
       date: invoice.date!,
+      deliveryDate: invoice.deliveryDate,
       customerName: invoice.customerName,
       customerAddress: invoice.customerAddress || '',
       items: invoice.items,
@@ -119,10 +121,22 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onInvoiceCreate }) => {
             onChange={(e) => setInvoice(prev => ({ ...prev, invoiceNo: e.target.value }))}
           />
           <input
-            type="date"
+            type="text"
+            placeholder="Invoice Date (DD/MM/YYYY)"
             value={invoice.date || ''}
             onChange={(e) => setInvoice(prev => ({ ...prev, date: e.target.value }))}
           />
+        </div>
+        <div className="form-row">
+          <input
+            type="text"
+            placeholder="Delivery Date (e.g., 01/12/2025 or 01/12/2025 - 20/12/2025)"
+            value={invoice.deliveryDate || ''}
+            onChange={(e) => setInvoice(prev => ({ ...prev, deliveryDate: e.target.value }))}
+          />
+        </div>
+        <div className="form-help">
+          <small>Enter single date (DD/MM/YYYY) or date range (DD/MM/YYYY - DD/MM/YYYY)</small>
         </div>
       </div>
 

@@ -77,7 +77,7 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, onBack, onPrin
             
             <div className="invoice-info">
               <p><strong>Invoice No.</strong> {invoice.invoiceNo}</p>
-              <p><strong>Date:</strong> {new Date(invoice.date).toLocaleDateString('en-IN')}</p>
+              <p><strong>Date:</strong> {invoice.date}</p>
             </div>
           </div>
         </div>
@@ -145,6 +145,12 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, onBack, onPrin
           <div className="amount-words">
             <p><strong>Rupees In Words:</strong> {invoice.amountInWords}</p>
           </div>
+          
+          {invoice.deliveryDate && (
+            <div className="delivery-date">
+              <p><strong>Delivery Date:</strong> {invoice.deliveryDate}</p>
+            </div>
+          )}
           
           <div className="signature">
             <p>For <strong>{userProfile.businessName.toUpperCase()}</strong></p>

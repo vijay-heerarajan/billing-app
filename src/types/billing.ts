@@ -26,6 +26,7 @@ export interface Invoice {
   id: string;
   invoiceNo: string;
   date: string;
+  deliveryDate?: string;
   customerName: string;
   customerAddress: string;
   items: InvoiceItem[];
