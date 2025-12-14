@@ -45,7 +45,7 @@ const InvoiceHistory: React.FC<InvoiceHistoryProps> = ({ onViewInvoice, onClose 
             {invoices.map(invoice => (
               <tr key={invoice.id}>
                 <td>{invoice.invoiceNo}</td>
-                <td>{new Date(invoice.date).toLocaleDateString('en-IN')}</td>
+                <td>{invoice.date}</td>
                 <td>{invoice.customerName}</td>
                 <td>₹{invoice.totalAmount.toFixed(2)}</td>
                 <td>

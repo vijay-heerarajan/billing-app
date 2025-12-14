@@ -25,6 +25,16 @@ export const calculateInvoiceTotals = (items: InvoiceItem[]) => {
   };
 };
 
+export const calculateRoundOff = (amount: number): { roundedAmount: number; roundOffValue: number } => {
+  const roundedAmount = Math.round(amount);
+  const roundOffValue = roundedAmount - amount;
+  
+  return {
+    roundedAmount,
+    roundOffValue
+  };
+};
+
 export const numberToWords = (num: number): string => {
   const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
   const teens = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
