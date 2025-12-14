@@ -26,9 +26,7 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({
     }
   }, [user]);
 
-  const { roundedAmount, roundOffValue } = calculateRoundOff(
-    invoice.totalAmount
-  );
+  const { roundedAmount } = calculateRoundOff(invoice.totalAmount);
 
   const getLogoPath = (logoPath: string | undefined) => {
     if (!logoPath) return "";
